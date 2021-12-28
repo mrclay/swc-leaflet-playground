@@ -1,10 +1,9 @@
-// @ts-ignore
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FeatureGroup, useMap } from "react-leaflet";
-import { MyPolygon } from "../MyPolygon";
-import { MyMarker } from "../MyMarker";
-import { createMark, createPoly, Mark, Poly, useStore } from "../../state";
 import { LatLngTuple } from "leaflet";
+import React, { useCallback, useEffect, useRef } from "react";
+import { FeatureGroup, useMap } from "react-leaflet";
+import { createMark, createPoly, Mark, Poly, useStore } from "../../state";
+import { MyMarker } from "../MyMarker";
+import { MyPolygon } from "../MyPolygon";
 
 type Data = LatLngTuple | Array<LatLngTuple> | Array<LatLngTuple[]>;
 

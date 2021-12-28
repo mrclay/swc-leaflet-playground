@@ -1,4 +1,4 @@
-import { LatLngLiteral, LatLngTuple } from 'leaflet';
+import { LatLngLiteral, LatLngTuple } from "leaflet";
 
 type Roundable = LatLngTuple | LatLngLiteral;
 

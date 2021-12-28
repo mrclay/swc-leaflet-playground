@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
 import L, { LatLngTuple, LeafletEventHandlerFnMap } from "leaflet";
+import React, { useMemo } from "react";
 import { Marker } from "react-leaflet";
 import { debounce } from "throttle-debounce";
-import { round } from "../../util";
 import { Mark, useLogger } from "../../state";
+import { round } from "../../util";
 
 interface MarkerProps {
   shape: Mark;

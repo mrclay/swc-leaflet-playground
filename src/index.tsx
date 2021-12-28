@@ -1,7 +1,7 @@
+// organize-imports-ignore
 import "teaful-devtools";
 
 import React from "react";
-// @ts-ignore
 import { createRoot } from "react-dom";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { Features, Spec } from "./components/Features";
@@ -13,8 +13,8 @@ const colors = "red blue purple brown gold skyblue".split(" ");
 let colorI = 0;
 
 document.querySelectorAll<HTMLElement>("[data-for]").forEach((el) => {
-  const key = el.dataset.for || '';
-  const json = el.textContent || '';
+  const key = el.dataset.for || "";
+  const json = el.textContent || "";
   const color = colors[colorI++ % colors.length];
   try {
     data.push({
@@ -44,7 +44,7 @@ function App() {
 
 const container = document.getElementById("container");
 if (!container) {
-  throw new Error('#container not present');
+  throw new Error("#container not present");
 }
 
 const root = createRoot(container);

@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo, useState } from "react";
 import { LatLngTuple, LeafletEventHandlerFnMap } from "leaflet";
+import React, { useCallback, useMemo, useState } from "react";
 import { Polygon, Tooltip } from "react-leaflet";
-import { MyMarker } from "../MyMarker";
 import { Mark, Poly, useLogger } from "../../state";
+import { MyMarker } from "../MyMarker";
 
-type Mode = '' | 'move' | 'adjust';
+type Mode = "" | "move" | "adjust";
 
 const nextMode: Record<Mode, Mode> = { "": "move", move: "adjust", adjust: "" };
 

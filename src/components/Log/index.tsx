@@ -1,5 +1,4 @@
-// @ts-ignore
-import React, { ReactNode } from "react";
+import React from "react";
 import { useStore } from "../../state";
 import styles from "./Log.module.scss";
 

@@ -1,9 +1,5 @@
-import createStore from "teaful";
 import { LatLngTuple } from "leaflet";
-
-export type Setter<T> = (
-  value: T | ((value: T) => T | undefined | null)
-) => void;
+import createStore from "teaful";
 
 interface ShapeProps {
   key: string;
@@ -33,8 +29,10 @@ function createKey(prefix = "shape") {
 
 function createDarkColor() {
   const one = () =>
-    Math.floor(Math.random() * 155).toString(16).padStart(2, '0');
-  return '#' + [0, 1, 3].map(one).join("");
+    Math.floor(Math.random() * 155)
+      .toString(16)
+      .padStart(2, "0");
+  return "#" + [0, 1, 3].map(one).join("");
 }
 
 export function createPoly(polygons: LatLngTuple[][]): Poly {
