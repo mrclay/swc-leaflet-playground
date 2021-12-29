@@ -21,7 +21,7 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
       shape.polygons.map((polygon, i) =>
         polygon.map((pt, j) => ({
           type: "Mark",
-          key: `${shape.key}-${i}-${j}`,
+          key: `${shape.key}:${i}-${j}`,
           color: shape.color,
           pt,
         }))
@@ -49,7 +49,7 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
   const adjust = useCallback(
     (mark: Mark, pt: LatLngTuple) => {
       const [, keyI, keyJ] = mark.key.match(
-        /-(\d+)-(\d+)$/
+        /:(\d+)-(\d+)$/
       ) as RegExpMatchArray;
       onChange(
         shape,
@@ -88,7 +88,11 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
     const onMove = mode === "move" ? move : adjust;
     vertexMarks.forEach((polygon) =>
       polygon.forEach((mark) => {
-        ret.push(<MyMarker key={mark.key} shape={mark} onMove={onMove} />);
+        ret.push(
+          <MyMarker key={mark.key} shape={mark} onMove={onMove}>
+            <Tooltip>{mark.key.substring(shape.key.length + 1)}</Tooltip>
+          </MyMarker>
+        );
       })
     );
     return ret;

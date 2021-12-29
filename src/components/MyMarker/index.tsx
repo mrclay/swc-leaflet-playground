@@ -10,7 +10,11 @@ interface MarkerProps {
   onMove?: (mark: Mark, pt: LatLngTuple) => void;
 }
 
-export const MyMarker: React.FC<MarkerProps> = ({ shape, onMove }) => {
+export const MyMarker: React.FC<MarkerProps> = ({
+  children,
+  shape,
+  onMove,
+}) => {
   const handlers: LeafletEventHandlerFnMap = useMemo(
     () => ({
       click(e) {
@@ -49,6 +53,8 @@ export const MyMarker: React.FC<MarkerProps> = ({ shape, onMove }) => {
       draggable
       eventHandlers={handlers}
       position={shape.pt}
-    />
+    >
+      {children}
+    </Marker>
   );
 };

@@ -1,7 +1,6 @@
 export const niceColors = [
   "#ff4136",
   "#3d9970",
-  "#001f3f",
   "#39cccc",
   "#85144b",
   "#2ecc40",
@@ -9,6 +8,7 @@ export const niceColors = [
   "#ff851b",
   "#0074d9",
   "#aaaaaa",
+  "#001f3f",
 ];
 
 let colorCounter = 0;
