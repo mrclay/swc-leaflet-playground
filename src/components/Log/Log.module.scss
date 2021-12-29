@@ -4,5 +4,20 @@
 }
 
 .item {
-  margin: 0.5rem 0;
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;
+
+  b {
+    font-family: "monospace";
+  }
+  input {
+    font-size: inherit;
+    padding: 3px;
+    width: 25em;
+  }
+  input + button {
+    font-size: inherit;
+    padding: 3px;
+  }
 }

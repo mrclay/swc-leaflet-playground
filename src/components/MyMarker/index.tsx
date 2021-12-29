@@ -2,8 +2,7 @@ import L, { LatLngTuple, LeafletEventHandlerFnMap } from "leaflet";
 import React, { useMemo } from "react";
 import { Marker } from "react-leaflet";
 import { debounce } from "throttle-debounce";
-import { Mark } from "../../state";
-import { round } from "../../util";
+import { Mark, round } from "../../shapes";
 import styles from "./MyMarker.module.css";
 
 interface MarkerProps {

@@ -1,38 +1,17 @@
 import { LatLngTuple } from "leaflet";
 import React, { useCallback, useEffect, useRef } from "react";
 import { FeatureGroup, useMap } from "react-leaflet";
-import { createMark, createPoly, Mark, Poly, useStore } from "../../state";
+import { Mark, Poly } from "../../shapes";
+import { captureStaticMap, useStore } from "../../state";
 import { MyMarker } from "../MyMarker";
 import { MyPolygon } from "../MyPolygon";
 
-type Data = LatLngTuple | Array<LatLngTuple> | Array<LatLngTuple[]>;
-
-export interface Spec {
-  data: Data;
-  color: string;
-  key: string;
-}
-
-interface FeaturesProps {
-  data: Spec[];
-}
-
-export function Features({ data }: FeaturesProps) {
+export function Features() {
   // @ts-ignore
   const featureGroupRef = useRef<FeatureGroup>(null);
   const map = useMap();
   const [shapes, setShapes] = useStore.shapes();
-
-  useEffect(() => {
-    setShapes(
-      data.map(({ data }) => {
-        if (typeof data[0] === "number") {
-          return createMark(data as LatLngTuple);
-        }
-        return createPoly(data as LatLngTuple[][]);
-      })
-    );
-  }, []);
+  captureStaticMap(map);
 
   useEffect(() => {
     if (shapes.length) {

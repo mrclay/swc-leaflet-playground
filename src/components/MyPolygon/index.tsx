@@ -1,8 +1,7 @@
 import { LatLngTuple, LeafletEventHandlerFnMap, PathOptions } from "leaflet";
 import React, { useCallback, useMemo, useState } from "react";
 import { Polygon, Tooltip } from "react-leaflet";
-import { Mark, Poly } from "../../state";
-import { round } from "../../util";
+import { Mark, Poly, round } from "../../shapes";
 import { MyMarker } from "../MyMarker";
 
 type Mode = "" | "move" | "adjust";
@@ -27,7 +26,7 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
           pt,
         }))
       ),
-    [shape.polygons]
+    [shape.polygons, shape.color]
   );
 
   const move = useCallback(
