@@ -7,6 +7,9 @@ const devMode = process.env.NODE_ENV !== "production";
 module.exports = {
   mode: devMode ? 'development' : 'production',
   entry: './src/index.tsx',
+  output: {
+    path: path.resolve(__dirname, 'docs'),
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss'],
   },

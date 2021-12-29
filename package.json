@@ -6,7 +6,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit --pretty",
     "build": "NODE_ENV=production webpack",
-    "view-build": "npx serve dist",
+    "view-build": "npx serve docs",
     "start": "concurrently \"webpack-dev-server\" \"tsc -w --noEmit --pretty\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
