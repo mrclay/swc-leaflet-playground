@@ -19,7 +19,7 @@ export function Log(): JSX.Element {
             break;
         }
         return (
-          <div key={shape.key}>
+          <div key={shape.key} className={styles.item}>
             <b style={{ fontFamily: "monospace", color: shape.color }}>
               {shape.key}
             </b>{" "}

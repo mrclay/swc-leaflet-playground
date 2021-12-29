@@ -6,6 +6,7 @@ import { createRoot } from "react-dom";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { Features, Spec } from "./components/Features";
 import { Log } from "./components/Log";
+import "./index.scss";
 
 const data: Array<Spec> = [];
 

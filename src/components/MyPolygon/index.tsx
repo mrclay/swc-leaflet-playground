@@ -1,7 +1,8 @@
-import { LatLngTuple, LeafletEventHandlerFnMap } from "leaflet";
+import { LatLngTuple, LeafletEventHandlerFnMap, PathOptions } from "leaflet";
 import React, { useCallback, useMemo, useState } from "react";
 import { Polygon, Tooltip } from "react-leaflet";
-import { Mark, Poly, useLogger } from "../../state";
+import { Mark, Poly } from "../../state";
+import { round } from "../../util";
 import { MyMarker } from "../MyMarker";
 
 type Mode = "" | "move" | "adjust";
@@ -14,7 +15,6 @@ interface PolygonProps {
 }
 
 export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
-  const logger = useLogger();
   const [mode, setMode] = useState<Mode>("");
 
   const vertexMarks: Mark[][] = useMemo(
@@ -38,7 +38,9 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
       onChange(
         shape,
         shape.polygons.map((oldPolygon) => {
-          return oldPolygon.map((oldPt) => [oldPt[0] + dx, oldPt[1] + dy]);
+          return oldPolygon.map((oldPt) =>
+            round([oldPt[0] + dx, oldPt[1] + dy])
+          );
         })
       );
     },
@@ -70,13 +72,12 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
       click(e) {
         e.originalEvent.stopPropagation();
         setMode(nextMode[mode]);
-        logger(JSON.stringify(shape));
       },
     }),
     [mode, shape]
   );
 
-  const pathOptions = useMemo(
+  const pathOptions: PathOptions = useMemo(
     () => ({
       color: shape.color,
     }),
