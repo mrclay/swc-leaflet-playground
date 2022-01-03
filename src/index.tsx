@@ -5,7 +5,7 @@ import React from "react";
 import { createRoot } from "react-dom";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { Features } from "./components/Features";
-import { Log } from "./components/Log";
+import { TextUi } from "./components/TextUi";
 import "./index.scss";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
         />
         <Features />
       </MapContainer>
-      <Log />
+      <TextUi />
     </div>
   );
 }

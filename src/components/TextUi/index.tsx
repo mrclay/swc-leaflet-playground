@@ -2,9 +2,9 @@ import React, { ReactElement, useState } from "react";
 import { changeColor } from "../../colors";
 import { createMark, createPoly, round, strToShape } from "../../shapes";
 import { useStaticMap, useStore } from "../../state";
-import styles from "./Log.module.scss";
+import styles from "./TextUi.module.scss";
 
-export function Log(): ReactElement | null {
+export function TextUi(): ReactElement | null {
   const [log] = useStore.log();
   const [shapes, setShapes] = useStore.shapes();
   const map = useStaticMap();
@@ -36,6 +36,21 @@ export function Log(): ReactElement | null {
     );
   }
 
+  const split = (key: string) => {
+    const shape = shapes.find((shape) => shape.key === key);
+    if (!shape || shape.type !== "Poly") {
+      return;
+    }
+
+    setShapes((shapes) => {
+      const ret = shapes.filter((el) => el.key !== key);
+      shape.polygons.forEach((polygon) => {
+        ret.push(createPoly([polygon]));
+      });
+      return ret;
+    });
+  };
+
   const copy = (key: string) => {
     const center = map.getCenter();
     const centerPt = map.latLngToLayerPoint(center);
@@ -66,7 +81,7 @@ export function Log(): ReactElement | null {
   }
 
   return (
-    <div className={styles.log}>
+    <div className={styles["textUi"]}>
       {shapes.map((shape, i) => {
         let data: any = {};
         switch (shape.type) {
@@ -86,6 +101,11 @@ export function Log(): ReactElement | null {
                 <button type="button" onClick={() => recolor(shape.key)}>
                   Recolor
                 </button>
+                {shape.type === "Poly" && shape.polygons.length > 1 && (
+                  <button type="button" onClick={() => split(shape.key)}>
+                    Split
+                  </button>
+                )}
                 <button type="button" onClick={() => copy(shape.key)}>
                   Copy
                 </button>
@@ -97,6 +117,7 @@ export function Log(): ReactElement | null {
           </div>
         );
       })}
+
       <div className={styles.item}>
         <b>new shape :&nbsp;</b>
         <div>

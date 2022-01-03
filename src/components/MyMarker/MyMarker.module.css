@@ -1,7 +1,17 @@
 .icon svg {
-  height: 30px;
   position: relative;
-  top: -24px;
-  left: -3px;
   width: auto;
 }
+
+.type-marker svg {
+  cursor: move;
+  height: 30px;
+  left: -3px;
+  top: -24px;
+}
+.type-add svg,
+.type-remove svg  {
+  left: -6px;
+  top: -7px;
+}
+
