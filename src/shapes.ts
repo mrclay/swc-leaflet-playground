@@ -3,7 +3,7 @@ import { niceColor } from "./colors";
 
 const defaultShapeStrings = [
   "[38.8979, -77.0333]",
-  "[[[39.0149,-77.0444],[38.9252,-77.3163],[39.1301,-77.6019],[39.1317,-77.0444]]]",
+  "[[[38.9541,-77.205],[38.8376,-77.4344],[38.9701,-77.5291],[39.1205,-77.2078]]]",
   "[[[38.9434,-76.9867],[38.9423,-76.8796],[38.8322,-76.9867]],[[38.922,-77.1845],[38.8376,-77.0251],[38.8344,-77.168]]]",
 ];
 
@@ -165,5 +165,5 @@ function isPolygon(val: any): val is LatLngTuple[] {
  * Note LatLngLiterals are turned into tuples in val
  */
 function isMultiPoly(val: any): val is LatLngTuple[][] {
-  return Array.isArray(val) && val.every(isPolygon);
+  return Array.isArray(val) && val.length > 0 && val.every(isPolygon);
 }

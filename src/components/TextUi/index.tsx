@@ -1,26 +1,14 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { changeColor } from "../../colors";
-import { createMark, createPoly, round, strToShape } from "../../shapes";
+import { createMark, createPoly, round } from "../../shapes";
 import { useStaticMap, useStore } from "../../state";
+import { Segments } from "./Segments";
 import styles from "./TextUi.module.scss";
 
 export function TextUi(): ReactElement | null {
   const [log] = useStore.log();
   const [shapes, setShapes] = useStore.shapes();
   const map = useStaticMap();
-  const [value, setValue] = useState("");
-
-  if (!map) {
-    return null;
-  }
-
-  function addShape() {
-    const shape = strToShape(value);
-    if (shape) {
-      setValue("");
-      setShapes((old) => [...old, shape]);
-    }
-  }
 
   function recolor(key: string) {
     setShapes((old) =>
@@ -51,38 +39,50 @@ export function TextUi(): ReactElement | null {
     });
   };
 
-  const copy = (key: string) => {
-    const center = map.getCenter();
-    const centerPt = map.latLngToLayerPoint(center);
-    const nudged = map.layerPointToLatLng(centerPt.add([50, 0]));
+  const copy = useCallback(
+    (key: string) => {
+      if (!map) {
+        return;
+      }
 
-    const dx = nudged.lat - center.lat;
-    const dy = nudged.lng - center.lng;
+      const center = map.getCenter();
+      const centerPt = map.latLngToLayerPoint(center);
+      const nudged = map.layerPointToLatLng(centerPt.add([50, 0]));
 
-    const target = shapes.find((shape) => shape.key === key);
-    if (!target) {
-      return;
-    }
+      const dx = nudged.lat - center.lat;
+      const dy = nudged.lng - center.lng;
 
-    if (target.type === "Mark") {
-      const newPt = round([target.pt[0] + dx, target.pt[1] + dy]);
-      setShapes((old) => [...old, createMark(newPt)]);
-    }
-    if (target.type === "Poly") {
-      const newPolygons = target.polygons.map((polygon) =>
-        polygon.map((pt) => round([pt[0] + dx, pt[1] + dy]))
-      );
-      setShapes((old) => [...old, createPoly(newPolygons)]);
-    }
-  };
+      const target = shapes.find((shape) => shape.key === key);
+      if (!target) {
+        return;
+      }
 
-  function remove(key: string) {
+      if (target.type === "Mark") {
+        const newPt = round([target.pt[0] + dx, target.pt[1] + dy]);
+        setShapes((old) => [...old, createMark(newPt)]);
+      }
+      if (target.type === "Poly") {
+        const newPolygons = target.polygons.map((polygon) =>
+          polygon.map((pt) => round([pt[0] + dx, pt[1] + dy]))
+        );
+        setShapes((old) => [...old, createPoly(newPolygons)]);
+      }
+    },
+    [map]
+  );
+
+  function removeShape(key: string) {
     setShapes((old) => old.filter((shape) => shape.key !== key));
   }
 
   return (
-    <div className={styles["textUi"]}>
-      {shapes.map((shape, i) => {
+    <div className={styles["text-ui"]}>
+      <div className={styles.item}>
+        <b>new shape :&nbsp;</b>
+        <Segments />
+      </div>
+
+      {shapes.map((shape) => {
         let data: any = {};
         switch (shape.type) {
           case "Mark":
@@ -109,7 +109,7 @@ export function TextUi(): ReactElement | null {
                 <button type="button" onClick={() => copy(shape.key)}>
                   Copy
                 </button>
-                <button type="button" onClick={() => remove(shape.key)}>
+                <button type="button" onClick={() => removeShape(shape.key)}>
                   Delete
                 </button>
               </div>
@@ -118,19 +118,6 @@ export function TextUi(): ReactElement | null {
         );
       })}
 
-      <div className={styles.item}>
-        <b>new shape :&nbsp;</b>
-        <div>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />{" "}
-          <button type="button" onClick={addShape}>
-            Add
-          </button>
-        </div>
-      </div>
       <pre>{log.join("\n")}</pre>
     </div>
   );

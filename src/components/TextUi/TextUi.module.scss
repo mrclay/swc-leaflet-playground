@@ -11,13 +11,34 @@
   b {
     font-family: "monospace";
   }
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 0.5rem;
+
+  span {
+    margin-left: 0.25rem;
+  }
+
   input {
+    background: #eee;
+    border: 0;
+    font-family: inherit;
     font-size: inherit;
-    padding: 3px;
-    width: 25em;
   }
-  input + button {
-    font-size: inherit;
-    padding: 3px;
-  }
+}
+
+.value {
+  background: #eee;
+}
+
+.remove {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 1em;
+  position: relative;
+  top: -0.2em;
 }

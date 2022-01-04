@@ -23,7 +23,7 @@ const modeLabels: Record<Mode, string> = {
 
 interface PolygonProps {
   shape: Poly;
-  onChange: (mark: Poly, polygons: LatLngTuple[][]) => void;
+  onChange?: (mark: Poly, polygons: LatLngTuple[][]) => void;
 }
 
 export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
@@ -68,6 +68,9 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
 
   const moveAll = useCallback(
     (mark: Mark, pt: LatLngTuple) => {
+      if (!onChange) {
+        return;
+      }
       const dx = pt[0] - mark.pt[0];
       const dy = pt[1] - mark.pt[1];
 
@@ -85,6 +88,9 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
 
   const removeOne = useCallback(
     (mark: Mark) => {
+      if (!onChange) {
+        return;
+      }
       const [, keyI, keyJ] = mark.key.match(
         /:(\d+)-(\d+)$/
       ) as RegExpMatchArray;
@@ -100,6 +106,9 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
 
   const moveOne = useCallback(
     (mark: Mark, pt: LatLngTuple) => {
+      if (!onChange) {
+        return;
+      }
       const [, keyI, keyJ] = mark.key.match(
         /:(\d+)-(\d+)$/
       ) as RegExpMatchArray;
@@ -121,6 +130,9 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
 
   const addMidpoint = useCallback(
     (mark: Mark) => {
+      if (!onChange) {
+        return;
+      }
       const [, keyI, keyJ] = mark.key.match(
         /:(\d+)-(\d+)-mid$/
       ) as RegExpMatchArray;
@@ -150,10 +162,12 @@ export const MyPolygon: React.FC<PolygonProps> = ({ shape, onChange }) => {
     () => ({
       click(e) {
         e.originalEvent.stopPropagation();
-        setMode(nextMode[mode]);
+        if (onChange) {
+          setMode(nextMode[mode]);
+        }
       },
     }),
-    [mode, shape]
+    [mode, shape, onChange]
   );
 
   const pathOptions: PathOptions = useMemo(

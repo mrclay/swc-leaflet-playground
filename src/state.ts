@@ -1,10 +1,12 @@
 import { Map } from "leaflet";
 import { useEffect } from "react";
 import createStore from "teaful";
+import { initSegments } from "./segments";
 import { getDefaultShapes } from "./shapes";
 
 const initStore = {
   shapes: getDefaultShapes(),
+  segments: initSegments,
   log: [] as string[],
   mapCounter: 0,
 };
