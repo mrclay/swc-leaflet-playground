@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useCallback, useMemo } from "react";
+import React, { FormEvent, ReactElement, useCallback, useMemo } from "react";
 import {
   handleParsing,
   initSegments,
@@ -12,14 +12,14 @@ export function Segments(): ReactElement | null {
   const [segments, setSegments] = useStore.segments();
 
   const updateInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, key: number) => {
+    (e: FormEvent<HTMLInputElement>, key: number) => {
       setSegments((segments) =>
         segments.map((old) => {
           if (key !== old.key || old.type !== "literal") {
             return old;
           }
 
-          return { ...old, value: e.target.value };
+          return { ...old, value: e.currentTarget.value };
         })
       );
     },
@@ -117,7 +117,7 @@ export function Segments(): ReactElement | null {
                     type="text"
                     value={seg.value}
                     style={{ width: `${ems}em` }}
-                    onChange={(e) => updateInput(e, seg.key)}
+                    onInput={(e) => updateInput(e, seg.key)}
                     onKeyUp={(e) => parseInput(e, seg.key)}
                   />
                 </span>
