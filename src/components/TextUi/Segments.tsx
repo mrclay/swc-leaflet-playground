@@ -68,6 +68,14 @@ export function Segments(): ReactElement | null {
     setSegments(initSegments);
   }
 
+  function flipPoints() {
+    setSegments((segments) => {
+      let json = JSON.stringify(segments);
+      json = json.replace(/\[([-\d.]+),([-\d.]+)]/g, "[$2,$1]");
+      return JSON.parse(json);
+    });
+  }
+
   return (
     <div>
       <div className={styles.segmented}>
@@ -133,6 +141,11 @@ export function Segments(): ReactElement | null {
       {hasProposedShapes && (
         <button type="button" onClick={() => addFromSegments(false)}>
           Add
+        </button>
+      )}
+      {hasProposedShapes && (
+        <button type="button" onClick={() => flipPoints()}>
+          Flip lat/lng
         </button>
       )}
       {segments !== initSegments && (
